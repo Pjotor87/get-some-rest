@@ -1,1 +1,1 @@
-web: gunicorn get-some-rest.wsgi
+web: gunicorn djangoapp.wsgi
