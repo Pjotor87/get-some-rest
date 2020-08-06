@@ -15,17 +15,30 @@ Including another URLconf
 """
 from django.urls import path, include
 from django.contrib.auth.models import User
+from djangoapp.models import Musician
 from rest_framework import serializers, viewsets, routers
 
+import djangoapp.seed as Seeder
+Seeder.ensure_base_seed(True)
 
-# Serializers define the API representation.
+
+class MusicianSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Musician
+        fields = ['firstname', 'lastname', 'band']
+
+
+class MusicianViewSet(viewsets.ModelViewSet):
+    queryset = Musician.objects.all()
+    serializer_class = MusicianSerializer
+
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['url', 'username', 'email', 'is_staff']
 
 
-# ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -34,6 +47,7 @@ class UserViewSet(viewsets.ModelViewSet):
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'musicians', MusicianViewSet)
 
 
 # Wire up our API using automatic URL routing.
