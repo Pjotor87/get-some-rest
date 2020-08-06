@@ -23,9 +23,9 @@ def test_should_seed_the_musician_table():
     seeder = Seeder.SQLiteSeed(testdata_seed)
     seeder.seed()
 
-    non_existing_entry = None
     try:
-        non_existing_entry = Models.Musician.objects.get(firstname="Non", lastname="Existing", band="Entry")
+        # Expected behaviour is to fail here and raise exception
+        Models.Musician.objects.get(firstname="Non", lastname="Existing", band="Entry")
     except Models.Musician.DoesNotExist:
         pass
-    assert Models.Musician.objects.get(firstname="Mike", lastname="Portnoy", band="Dream Theater") != None, "Did not find A seeded entry that should exist"
+    assert Models.Musician.objects.get(firstname="Mike", lastname="Portnoy", band="Dream Theater") is not None, "Did not find A seeded entry that should exist"
