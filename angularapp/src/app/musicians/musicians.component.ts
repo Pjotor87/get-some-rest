@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Musician } from '../Musician';
+import { MusicianService } from '../musician.service';
 
 @Component({
   selector: 'app-musicians',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MusiciansComponent implements OnInit {
 
-  constructor() { }
+  musicians: Musician[] = [{firstname: "n/a", lastname: "n/a", band: "n/a"}]
+
+  constructor(private musicianService: MusicianService) { }
 
   ngOnInit(): void {
+    this.getMusicians();
+  }
+
+  getMusicians(): void {
+    this.musicianService.getMusicians()
+    .subscribe(musicians => this.musicians = musicians);
   }
 
 }

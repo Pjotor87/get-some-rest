@@ -1,1 +1,6 @@
 <p>musicians works!</p>
+
+<div *ngFor="let item of musicians">
+  <div><span>Name: </span>{{item.firstname}} {{item.lastname}}</div>
+  <div><span>Band: </span>{{item.band}}</div>
+</div>
