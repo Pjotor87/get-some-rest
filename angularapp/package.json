@@ -8,7 +8,11 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "cypress": "cypress"
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "ci:start-server": "angular-http-server --path ./dist/angularapp -p 4200",
+    "ci:cy-run-headless": "start-server-and-test ci:start-server http://localhost:4200 cy:run",
+    "e2e:cy": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +37,7 @@
     "@types/node": "^12.11.1",
     "angular-http-server": "^1.9.0",
     "codelyzer": "^6.0.0",
+    "concurrently": "^5.3.0",
     "cypress": "^4.12.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -45,6 +50,7 @@
     "start-server-and-test": "^1.11.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~3.9.5"
+    "typescript": "~3.9.5",
+    "wait-on": "^5.2.0"
   }
 }
